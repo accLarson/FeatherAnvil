@@ -3,9 +3,12 @@ package com.zerek.featheranvil.listeners;
 import com.zerek.featheranvil.FeatherAnvil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
@@ -31,7 +34,7 @@ public class PrepareAnvilListener implements Listener {
                     stringName[0] = stringName[0].replace(k, tagMap.get(k));
                     ItemMeta resultMeta = event.getResult().getItemMeta();
                     resultMeta.displayName(MiniMessage.miniMessage().deserialize(stringName[0]));
-                    event.getResult().setItemMeta(resultMeta);
+                    if (!PlainTextComponentSerializer.plainText().serialize(resultMeta.displayName()).isEmpty()) event.getResult().setItemMeta(resultMeta);
                 }
             });
         }
