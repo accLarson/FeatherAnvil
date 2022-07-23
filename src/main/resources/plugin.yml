@@ -1,0 +1,6 @@
+name: FeatherAnvil
+version: '${project.version}'
+main: com.zerek.featheranvil.FeatherAnvil
+api-version: 1.19
+authors: [ Zerek ]
+description: Allows for using color codes in anvils
