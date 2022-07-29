@@ -34,7 +34,7 @@ public class PrepareAnvilListener implements Listener {
                     stringName[0] = stringName[0].replace(k, tagMap.get(k));
                     ItemMeta resultMeta = event.getResult().getItemMeta();
                     resultMeta.displayName(MiniMessage.miniMessage().deserialize(stringName[0]));
-                    if (!PlainTextComponentSerializer.plainText().serialize(resultMeta.displayName()).isEmpty()) event.getResult().setItemMeta(resultMeta);
+                    if (!PlainTextComponentSerializer.plainText().serialize(resultMeta.displayName()).trim().isEmpty()) event.getResult().setItemMeta(resultMeta);
                 }
             });
         }
