@@ -33,20 +33,28 @@ public class PrepareAnvilListener implements Listener {
 
             stringNames[0] = LegacyComponentSerializer.legacyAmpersand().serialize(event.getInventory().getFirstItem().displayName()).replaceAll("&[A-fK-o0-9]|\\[|\\]", "").replace("&x","");
             stringNames[1] = LegacyComponentSerializer.legacyAmpersand().serialize(event.getResult().displayName()).replaceAll("&[A-fK-o0-9]|\\[|\\]", "").replace("&x","");
-            stringNames[2] = stringNames[1].replace("<donor>","").replace("<ass>","").replace("<mod>","");
+            //maybe unneeded
+            stringNames[2] = stringNames[1].replace("<donor>","").replace("<ass>","").replace("<mod>","").replace("<admin>","");
 
-            if (!stringNames[2].equals(stringNames[0])) {
-
-                String date = new SimpleDateFormat("MMM d yyyy").format(new Date());
+            if (!stringNames[1].equals(stringNames[0])) {
                 String playerName = event.getViewers().get(0).getName();
 
                 if (event.getResult().lore() != null) {
 
                     List<Component> newLore = event.getResult().lore();
-                    newLore.add(Component.text("Named: " + stringNames[2] +  " By: " + playerName + " On: " + date));
+
+                    for (int i = 0; i < newLore.size(); i++) {
+                        Component component = newLore.get(i);
+                        if (MiniMessage.miniMessage().serialize(component).startsWith("Named By: ")) {
+                            newLore.set(i, Component.text("Named By: " + playerName));
+                            event.getResult().lore(newLore);
+                            return;
+                        }
+                    }
+                    newLore.add(Component.text("Named By: " + playerName));
                     event.getResult().lore(newLore);
                 }
-                else event.getResult().lore(Collections.singletonList(Component.text("Named: " + stringNames[2] +  " By: " + playerName + " On: " + date)));
+                else event.getResult().lore(Collections.singletonList(Component.text("Named By: " + playerName)));
             }
 
             tagMap.keySet().forEach(k -> {
